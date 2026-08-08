@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function navbar() {
+function Navbar() {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.role;
@@ -66,4 +66,4 @@ function navbar() {
   );
 }
 
-export default navbar;
+export default Navbar;

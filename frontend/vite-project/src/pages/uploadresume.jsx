@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import navbar from "../components/navbar";
+import Navbar from "../components/navbar";
 import { useNavigate } from "react-router-dom";
-function uploadresume() {
+function UploadResume() {
 
   const [resume, setResume] = useState(null);
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ navigate("/resume-analysis");
 
   return (
   <>
-    <navbar />
+    <Navbar />
 
     <div className="upload-container">
 
@@ -106,4 +106,4 @@ navigate("/resume-analysis");
 
 }
 
-export default uploadresume;
+export default UploadResume;

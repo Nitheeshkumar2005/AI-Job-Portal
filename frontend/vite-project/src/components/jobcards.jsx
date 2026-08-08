@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-function jobcards({ job }) {
-
+function JobCards({ job }) {
   const navigate = useNavigate();
 
   return (
-
     <div className="job-card">
 
       <div className="company-logo">
@@ -35,15 +33,13 @@ function jobcards({ job }) {
       </p>
 
       <button
-      onClick={() => navigate(`/jobs/${job._id}`)}
+        onClick={() => navigate(`/jobs/${job._id}`)}
       >
         View Details →
       </button>
 
     </div>
-
   );
-
 }
 
-export default jobcards;
+export default JobCards;

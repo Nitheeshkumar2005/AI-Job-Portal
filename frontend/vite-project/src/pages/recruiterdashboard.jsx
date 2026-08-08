@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import navbar from "../components/navbar";
+import Navbar from "../components/navbar";
 
-function recruiterDashboard() {
+function RecruiterDashboard() {
 
   const [applications, setApplications] = useState([]);
 
@@ -140,4 +140,4 @@ return (
 );
 }
 
-export default recruiterdashboard;
+export default RecruiterDashboard;

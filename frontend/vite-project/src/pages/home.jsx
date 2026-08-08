@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import navbar from "../components/navbar";
+import Navbar from "../components/navbar";
 
-function home() {
+function Home() {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -9,7 +9,7 @@ function home() {
 
   return (
     <>
-      <navbar />
+      <Navbar />
 
       <div className="home">
         <div className="hero hero-center">
@@ -94,4 +94,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

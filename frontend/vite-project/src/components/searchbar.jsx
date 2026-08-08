@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function searchbar({ onSearch }) {
+function SearchBar({ onSearch }) {
 
   const [search, setSearch] = useState("");
 
@@ -24,4 +24,4 @@ function searchbar({ onSearch }) {
   );
 }
 
-export default searchbar;
+export default SearchBar;

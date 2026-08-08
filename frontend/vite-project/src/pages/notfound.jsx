@@ -1,9 +1,9 @@
 import React from 'react'
 
-const notfound = () => {
+const notFound = () => {
   return (
     <div>Notfound</div>
   )
 }
 
-export default notfound
+export default notFound

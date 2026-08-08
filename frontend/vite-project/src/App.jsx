@@ -1,77 +1,99 @@
 import { Routes, Route } from "react-router-dom";
 
-import home from "./pages/home";
-import login from "./pages/login";
-import register from "./pages/register";
-import jobs from "./pages/jobs";
-import jobdetails from "./pages/jobdetails";
-import candidatedashboard from "./pages/candidatedashboard";
-import recruiterdashboard from "./pages/recruiterdashboard";
-import uploadresume from "./pages/uploadresume";
-import resumeanalysis from "./pages/resumeanalysis";
-import createjob from "./pages/createjob";
-import applicants from "./pages/applicants";
-import notfound from "./pages/notfound";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Jobs from "./pages/jobs";
+import JobDetails from "./pages/jobdetails";
+import CandidateDashboard from "./pages/candidatedashboard";
+import RecruiterDashboard from "./pages/recruiterdashboard";
+import UploadResume from "./pages/uploadresume";
+import ResumeAnalysis from "./pages/resumeanalysis";
+import CreateJob from "./pages/createjob";
+import Applicants from "./pages/applicants";
+import NotFound from "./pages/notfound";
 
-import protectedroutes from "./components/protectedroutes";
+import ProtectedRoute from "./components/protectedroutes";
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<home />} />
 
-      <Route path="/login" element={<login />} />
+      {/* Home */}
+      <Route path="/" element={<Home />} />
 
-      <Route path="/register" element={<register />} />
+      {/* Authentication */}
+      <Route path="/login" element={<Login />} />
 
-      <Route path="/jobs" element={<jobs />} />
+      <Route path="/register" element={<Register />} />
 
-      <Route path="/jobs/:id" element={<jobdetails />} />
-<Route
-    path="/candidate/dashboard"
-    element={
-        <ProtectedRoute>
-            <candidatedashboard />
-        </ProtectedRoute>
-    }
-/>
+      {/* Jobs */}
+      <Route path="/jobs" element={<Jobs />} />
 
+      <Route path="/jobs/:id" element={<JobDetails />} />
+
+      {/* Candidate Dashboard */}
       <Route
-        path="/recruiter/dashboard"
-        element={<ProtectedRoute>
-          <recruiterdashboard />
-        </ProtectedRoute>}
-      />
-
-      <Route
-        path="/upload-resume"
+        path="/candidate/dashboard"
         element={
-        <ProtectedRoute><uploadresume />
-        </ProtectedRoute>
-        
+          <ProtectedRoute>
+            <CandidateDashboard />
+          </ProtectedRoute>
         }
       />
 
+      {/* Recruiter Dashboard */}
       <Route
-        path="/resume-analysis"
-        element={<ProtectedRoute>
-          <resumeanalysis />
-        </ProtectedRoute>}
+        path="/recruiter/dashboard"
+        element={
+          <ProtectedRoute>
+            <RecruiterDashboard />
+          </ProtectedRoute>
+        }
       />
 
+      {/* Upload Resume */}
+      <Route
+        path="/upload-resume"
+        element={
+          <ProtectedRoute>
+            <UploadResume />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Resume Analysis */}
+      <Route
+        path="/resume-analysis"
+        element={
+          <ProtectedRoute>
+            <ResumeAnalysis />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Create Job */}
       <Route
         path="/create-job"
         element={
-        <ProtectedRoute>
-          <createjob />
-        </ProtectedRoute>}
+          <ProtectedRoute>
+            <CreateJob />
+          </ProtectedRoute>
+        }
       />
 
+      {/* Applicants */}
       <Route
         path="/applicants"
-        element={<applicants />}
+        element={<Applicants />}
       />
 
-      <Route path="*" element={<notfound />} />
+      {/* 404 */}
+      <Route
+        path="*"
+        element={<NotFound />}
+      />
+
     </Routes>
   );
 }
