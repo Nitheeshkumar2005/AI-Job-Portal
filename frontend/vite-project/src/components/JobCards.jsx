@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function JobCards({ job }) {
+function jobCards({ job }) {
 
   const navigate = useNavigate();
 
@@ -46,4 +46,4 @@ function JobCards({ job }) {
 
 }
 
-export default JobCards;
+export default jobCards;
