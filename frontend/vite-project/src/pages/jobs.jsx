@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import JobCards from "../components/jobCards";
-import Navbar from "../components/navbar";
-import Searchbar from "../components/searchbar";
+import jobCards from "../components/jobCards";
+import navbar from "../components/navbar";
+import searchbar from "../components/searchbar";
 
 function jobs() {
 
@@ -35,13 +35,13 @@ function jobs() {
 
   return (
     <>
-      <Navbar />
+      <navbar />
 
       <div className="jobs-container">
 
         <h1>Discover Your Next Career Opportunity 🚀</h1>
 
-        <Searchbar onSearch={setSearch} />
+        <searchbar onSearch={setSearch} />
 
         <select
           className="location-filter"
@@ -61,7 +61,7 @@ function jobs() {
             <h2>No Jobs Found</h2>
           ) : (
             jobs.map((job) => (
-              <JobCards key={job._id} job={job} />
+              <jobcards key={job._id} job={job} />
             ))
           )}
 
