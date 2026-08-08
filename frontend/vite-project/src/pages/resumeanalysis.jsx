@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import Navbar from "../components/navbar";
+import navbar from "../components/navbar";
 
-function resumeAnalysis() {
+function resumeanalysis() {
 
   const [analysis, setAnalysis] = useState("");
 
@@ -38,7 +38,7 @@ function resumeAnalysis() {
 
 return (
   <>
-    <Navbar />
+    <navbar />
 
     <div className="analysis-container">
 
@@ -79,4 +79,4 @@ return (
 );
 }
 
-export default resumeAnalysis;
+export default resumeanalysis;

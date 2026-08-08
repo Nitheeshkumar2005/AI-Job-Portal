@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import Navbar from "../components/navbar";
+import navbar from "../components/navbar";
 
 function candidateDashboard() {
 

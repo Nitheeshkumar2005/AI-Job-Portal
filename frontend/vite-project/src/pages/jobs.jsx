@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import jobCards from "../components/jobCards";
+import jobcards from "../components/jobCards";
 import navbar from "../components/navbar";
 import searchbar from "../components/searchbar";
 

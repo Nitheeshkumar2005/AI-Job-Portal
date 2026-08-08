@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import Navbar from "../components/navbar";
+import navbar from "../components/navbar";
 
 function recruiterDashboard() {
 
@@ -61,7 +61,7 @@ function recruiterDashboard() {
 
 return (
   <>
-    <Navbar />
+    <navbar />
 
     <div className="recruiter-container">
 
@@ -140,4 +140,4 @@ return (
 );
 }
 
-export default recruiterDashboard;
+export default recruiterdashboard;
