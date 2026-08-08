@@ -1,0 +1,952 @@
+backend/
+│
+├── config/
+│   └── db.js
+│
+├── controllers/
+│   ├── authController.js
+│   ├── userController.js
+│   ├── jobController.js
+│   ├── applicationController.js
+│   ├── recruiterController.js
+│   ├── aiController.js
+│   └── resumeController.js
+│
+├── middleware/
+│   ├── authMiddleware.js
+│   ├── uploadMiddleware.js
+│   └── errorMiddleware.js
+│
+├── models/
+│   ├── User.js
+│   ├── Job.js
+│   ├── Application.js
+│   └── Resume.js
+│
+├── routes/
+│   ├── authRoutes.js
+│   ├── userRoutes.js
+│   ├── jobRoutes.js
+│   ├── applicationRoutes.js
+│   ├── recruiterRoutes.js
+│   ├── aiRoutes.js
+│   └── resumeRoutes.js
+│
+├── uploads/
+│
+├── utils/
+│   ├── generateToken.js
+│   └── gemini.js
+│
+├── .env
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── server.js
+
+
+
+Middleware
+
+Middleware runs before the controller.
+
+authMiddleware.js → Checks whether the user has a valid JWT token.
+uploadMiddleware.js → Handles resume PDF upload using Multer.
+errorMiddleware.js → Handles errors and sends a proper response instead of crashing the server.
+
+👉 Easy rule:
+
+Middleware = Security / Checking / Processing before reaching the controller.
+
+Flow
+Request
+   ↓
+Middleware
+   ↓
+Controller
+   ↓
+Model
+   ↓
+MongoDB
+   ↓
+Response
+
+Interview one-liner:
+
+Model → Defines the database structure (schema & collection).
+Middleware → Executes before the controller to validate, authenticate, upload files, or handle errors.
+
+
+Models (MongoDB Collections)
+
+Each model represents one collection in MongoDB.
+
+User.js → Stores users (Candidate, Recruiter, Admin)
+Job.js → Stores job details
+Application.js → Stores which candidate applied to which job
+Resume.js → Stores resume details (filename, path, AI analysis, etc.)
+
+👉 Easy rule:
+
+1 Model = 1 Collection in MongoDB
+
+
+
+enum = Restrict values. ✅
+
+Tanglish:
+
+Specific values mattum allow pannum. Vera value save panna vidaadhu.
+
+Example:
+
+role: {
+  type: String,
+  enum: ["candidate", "recruiter", "admin"]
+}
+
+Allowed:
+
+✅ candidate
+✅ recruiter
+✅ admin
+
+role means what type of user is logging into your Job Portal.
+
+In our project:
+
+👨‍🎓 candidate → Job seeker (applies for jobs)
+🧑‍💼 recruiter → HR/Company (posts jobs)
+👑 admin → Manages the whole portal
+
+Example:
+
+{
+  name: "Nitheesh",
+  role: "candidate"
+}
+
+You are a job seeker.
+
+{
+  name: "Infosys HR",
+  role: "recruiter"
+}
+
+They can post jobs.
+
+{
+  name: "Portal Admin",
+  role: "admin"
+}
+
+
+📄 controllers/jobController.js
+
+Why? (Tanglish)
+
+Job create, view, update, delete logic ellam inga irukkum.
+
+We'll first implement only Create Job.
+
+Roadmap
+Job Model ✅
+      ↓
+Job Controller 👈 NEXT
+      ↓
+Job Routes
+      ↓
+Connect in server.js
+      ↓
+Test in Postman
+      ↓
+Get All Jobs
+      ↓
+Pagination
+      ↓
+Search
+      ↓
+Filter
+      ↓
+Sort
+
+strtucture to add these features inside getAlJob
+
+getAllJob()
+{
+   try{
+
+      Pagination
+
+      Search
+
+      Filter
+
+      Sort
+
+      Populate
+
+      Send Response
+
+   }
+   catch{
+
+   }
+}
+
+models/application.js
+Candidate
+     ↓
+Views Jobs
+     ↓
+Clicks Apply
+     ↓
+Application Created
+     ↓
+Recruiter Views Applicants
+     ↓
+Recruiter Accepts / Rejects
+
+
+Short Explanation
+candidate → Which user applied.
+job → Which job they applied for.
+status → Pending / Accepted / Rejected.
+timestamps → createdAt, updatedAt.
+
+
+
+✅ Multer = Uploads and saves the file (Express/Node.js).
+✅ PyMuPDF = Reads/extracts text from the uploaded PDF (Flask/Python).
+Flask → PyMuPDF
+MERN → pdf-parse
+
+
+pdf-parse → PDF-la irukkura text extract pannum.
+
+@google/genai → Andha text-a Gemini-ku anuppi AI analysis vangum
+
+// groq
+Temperature = AI creativity level
+temperature: 0
+Very strict
+Very consistent
+Same answer almost every time
+
+Best for:
+
+Resume analysis ✅
+Code generation ✅
+SQL queries ✅
+temperature: 0.5
+Balanced
+Some creativity
+Mostly consistent
+
+Best for:
+
+Resume suggestions ✅
+Chatbots ✅
+Emails ✅
+temperature: 1
+Highly creative
+Different answer every time
+
+Best for:
+
+Story writing
+Poems
+Marketing content
+--------------------------------------------------------------------------------------------------------
+Easy way to remember
+
+🔐 Authentication = Identity (Who are you?)
+
+🛡️ Authorization = Permission (What can you do?)
+
+Authentication (Who are you?)
+
+👉 Checks your identity.
+
+Question:
+
+"Nee yaaru? Un token valid-a?"
+
+Example:
+
+Login with email & password
+jwt.verify(token)
+
+If valid:
+
+✅ "Yes, this is Nitheesh."
+
+
+Authorization (What are you allowed to do?)
+
+👉 Checks your permission.
+
+Question:
+
+"Nee enna panna permission irukku?"
+
+Example:
+
+Candidate  → Apply Job ✅
+Candidate  → Create Job ❌
+
+Recruiter  → Create Job ✅
+Recruiter  → Delete Job ✅
+-------------------------------------------------------------------------------------------------------
+important:  
+"I already logged in. Email and password were correct. Then why verify the token again?"
+This is because HTTP is stateless.
+
+What does stateless mean?
+
+Every request is independent.
+
+Example:
+
+POST /login
+
+Server verifies:
+
+✅ Email
+✅ Password
+
+Creates token.
+
+After that request finishes...
+
+❌ Server does NOT remember that you are logged in.
+
+Next request:
+
+GET /profile
+
+Server only sees:
+
+GET /profile
+
+It doesn't know:
+
+Who sent it?
+Is it you?
+Is it another person?
+
+So the frontend sends:
+
+Authorization: Bearer eyJhbGc...
+
+Now the middleware verifies:
+
+"Yes, this token was created by me. This request is from the same logged-in user."
+
+Without sending the token every time, the server has no way to identify you.
+"Does every protected GET and POST route use middleware?"
+Every protected route should use authentication middleware.
+--------------------------------------------------------------------------------------------------
+important 
+1. Header
+
+Header tells what type of token this is and which algorithm was used.
+
+Example:
+
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+Meaning:
+
+alg = Algorithm
+
+typ = JWT
+
+2. Payload
+
+Payload contains the actual data.
+
+Example:
+
+{
+  "id": "12345",
+  "role": "student"
+}
+
+This data comes from your code.
+
+Example:
+
+jwt.sign(
+{
+   id:user._id,
+   role:user.role
+},
+SECRET
+)
+
+So the payload becomes:
+
+{
+  "id":"12345",
+  "role":"student"
+} 
+
+
+
+2. Payload
+
+Payload contains the actual data.
+
+Example:
+
+{
+  "id": "12345",
+  "role": "student"
+}
+
+This data comes from your code.
+
+Example:
+
+jwt.sign(
+{
+   id:user._id,
+   role:user.role
+},
+SECRET
+)
+
+So the payload becomes:
+
+{
+  "id":"12345",
+  "role":"student"
+}
+
+
+3. Signature
+
+This is the most important part.
+
+Signature proves:
+
+"This token was really created by my server and hasn't been changed."
+
+Example
+
+Secret:
+
+mysecret123
+
+Payload:
+
+{
+"id":"123"
+}
+
+JWT creates a signature using:
+
+Header
+
++
+
+Payload
+
++
+
+Secret Key
+
+Result:
+
+a8dh92jj39jd...
+
+That becomes the signature.
+
+Why do we need the signature?
+
+Imagine someone changes the payload.
+
+Original:
+
+{
+"id":"123",
+"role":"student"
+}
+
+Hacker changes it to:
+
+{
+"id":"123",
+"role":"admin"
+}
+
+Now the payload changed.
+
+But the signature was created using the original payload.
+
+So when:
+
+jwt.verify(token, SECRET)
+
+runs,
+
+Node generates a new signature from the current header + payload + secret and compares it with the signature inside the token.
+
+They won't match.
+
+Result:
+
+Invalid Signature
+
+↓
+
+Unauthorized
+
+So the user cannot become an admin by editing the token.
+
+
+Header-la token type (JWT) and signing algorithm (HS256) information irukkum. 
+Payload-la application-ku thevaiyana data, like user id, role, email store pannuvom.
+Signature-na header + payload + secret key use panni generate pannuvanga. Verify pannumbodhu adhe secret use panni signature compare pannuvanga. Payload-a yaaravadhu modify panna signature match aagadhu, so token invalid-nu reject pannidum
+
+
+important flow:
+
+req.headers.authorization is NOT the JWT Header.
+
+There are two different "headers"
+
+1. HTTP Header ✅
+
+This is part of the HTTP request.
+
+When React sends a request:
+
+GET /profile HTTP/1.1
+Host: localhost:5000
+Authorization: Bearer eyJhbGc...
+Content-Type: application/json
+
+
+2. JWT Header ✅
+
+Inside the token itself, there is another header.
+
+Example JWT:
+
+xxxxx.yyyyy.zzzzz
+
+It has:
+
+JWT Header
+.
+JWT Payload
+.
+JWT Signature
+
+The JWT Header is something like:
+
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+This is inside the token, not inside req.headers.
+
+When you call:
+
+jwt.verify(token, process.env.JWT_SECRET)
+
+
+
+
+Register pannumbodhu user details MongoDB-la save pannuvom, 
+password hash panni. Login pannumbodhu email/password verify pannuvom. 
+Correct-na jwt.sign() use panni id and role payload-oda JWT create pannuvom.
+ Frontend adha localStorage-la save pannum. 
+ Protected route-ku request varumbodhu Authorization: Bearer <token> header-la token send pannum. 
+ Authentication middleware jwt.verify() use panni token valid-a, secret key-oda sign panninadha, 
+ expiry irukka-nu verify pannum. Valid-na req.user-la id and role store pannum. 
+ Apram authorization middleware role check pannum.
+  Recruiter-na job create/delete panna allow pannum, 
+  candidate-na apply panna mattum allow pannum
+  ---------------------------------------------------------------------------------------------
+ 
+ 
+ 
+  Frontend:
+
+  frontend/
+│
+├── public/
+│
+├── src/
+│
+│── assets/
+│
+│── components/
+│   ├── Navbar.jsx
+│   ├── Footer.jsx
+│   ├── JobCard.jsx
+│   ├── SearchBar.jsx
+│   ├── ProtectedRoute.jsx
+│   ├── RecruiterSidebar.jsx
+│   ├── CandidateSidebar.jsx
+│   └── Loader.jsx
+│
+│── pages/
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Jobs.jsx
+│   ├── JobDetails.jsx
+│   ├── ApplyJob.jsx
+│   ├── UploadResume.jsx
+│   ├── ResumeAnalysis.jsx
+│   ├── CandidateDashboard.jsx
+│   ├── RecruiterDashboard.jsx
+│   ├── CreateJob.jsx
+│   ├── EditJob.jsx
+│   ├── Applicants.jsx
+│   └── NotFound.jsx
+│
+│── services/
+│   ├── authService.js
+│   ├── jobService.js
+│   ├── applicationService.js
+│   ├── resumeService.js
+│   └── aiService.js
+│
+│── context/
+│   └── AuthContext.jsx
+│
+│── hooks/
+│   └── useAuth.js
+│
+│── utils/
+│   ├── axiosInstance.js
+│   └── constants.js
+│
+│── App.jsx
+│── main.jsx
+│── App.css
+│── index.css
+│
+├── .env
+├── package.json
+└── vite.config.js
+
+
+Easy memory:
+
+GET Jobs → Anyone can see → ❌ No token
+Apply Job → Logged-in user only → ✅ Token
+Create Job → Recruiter only → ✅ Token
+Upload Resume → Logged-in candidate → ✅ Token
+
+✅ req.body = data sent by the frontend
+✅ req.user = data extracted from the JWT token
+======================================================================================================================
+important flow...read this fully never forgot 
+STEP 1 — Candidate Register
+
+POST
+
+/auth/register
+
+Body
+
+{
+  "name":"Nitheesh",
+  "email":"nitheesh@gmail.com",
+  "password":"123456",
+  "role":"candidate"
+}
+
+Backend does
+
+req.body
+     ↓
+User.create()
+     ↓
+MongoDB users collection
+
+Stored:
+
+Users
+
+_id : AAA111
+name : Nitheesh
+role : candidate
+
+👉 Only the user is stored. No token is stored in the database.
+================================================================================================================
+
+STEP 2 — Candidate Login
+POST /auth/login
+
+Backend
+
+Email + Password
+        ↓
+find user
+        ↓
+Password match
+        ↓
+jwt.sign({
+    id:user._id,
+    role:user.role
+})
+        ↓
+TOKEN
+
+Example
+
+TOKEN
+
+{
+id : AAA111
+role : candidate
+}
+
+This token is sent to React/Postman.
+
+You save it in
+
+localStorage
+
+or use it in Postman.
+=======================================================================================================================================
+
+STEP 3 — Recruiter Register
+POST /auth/register
+
+Stored
+
+Users
+
+_id : BBB222
+role : recruiter
+====================================================================================================================================
+
+STEP 4 — Recruiter Login
+POST /auth/login
+
+Backend creates
+
+TOKEN
+
+{
+id : BBB222
+role : recruiter
+}
+
+Now recruiter has his own token.
+==========================================================================================================================
+
+
+STEP 5 — Recruiter Creates Job
+
+Frontend/Postman sends
+
+POST /jobs/create-job
+
+Header
+
+Bearer RecruiterToken
+
+Auth middleware
+
+JWT
+
+↓
+
+verify
+
+↓
+
+req.user
+
+↓
+
+req.user.id
+
+=
+
+BBB222
+
+Now backend saves
+
+Job.create({
+
+title,
+
+company,
+
+...
+
+recruiter:req.user.id
+
+})
+
+MongoDB
+
+Jobs
+
+_id : JOB111
+
+title : Java Developer
+
+recruiter : BBB222
+
+🔥 Job is now linked to Recruiter BBB222.
+========================================================================================================================
+
+
+STEP 6 — Candidate Applies
+
+Candidate logs in.
+
+Token
+
+id : AAA111
+
+Clicks Apply
+
+Frontend sends
+
+POST /applications/apply
+
+Body
+
+job
+
+JOB111
+
+Header
+
+Bearer CandidateToken
+
+Backend
+
+req.user.id
+
+↓
+
+AAA111
+
+Now backend creates
+
+Application.create({
+
+candidate : AAA111,
+
+job : JOB111
+
+})
+
+MongoDB
+
+Applications
+
+candidate
+
+AAA111
+
+job
+
+JOB111
+
+🔥 Candidate is linked to Job.
+====================================================================================================================
+
+
+STEP 7 — Recruiter Opens Dashboard
+
+Recruiter logs in again.
+
+Token
+
+id
+
+BBB222
+
+Backend
+
+req.user.id
+
+↓
+
+BBB222
+
+Then
+
+Job.find({
+    recruiter:req.user.id
+})
+
+becomes
+
+Job.find({
+    recruiter:"BBB222"
+})
+
+MongoDB finds
+
+JOB111
+
+Now backend gets
+
+jobIds
+
+↓
+
+[JOB111]
+
+Then
+
+Application.find({
+
+job:{$in:jobIds}
+
+})
+
+becomes
+
+Application.find({
+
+job:JOB111
+
+})
+
+MongoDB finds
+
+candidate AAA111
+
+↓
+
+populate()
+
+↓
+
+Name
+
+Email
+
+Job Title
+
+Status
+
+Recruiter dashboard finally shows
+
+Nitheesh
+
+Applied for
+
+Java Full Stack Developer
+
+Pending
