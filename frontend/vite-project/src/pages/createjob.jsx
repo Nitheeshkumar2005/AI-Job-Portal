@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 
-function createJob() {
+function createjob() {
 
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
@@ -134,4 +134,4 @@ function createJob() {
 );
 }
 
-export default createJob;
+export default createjob;

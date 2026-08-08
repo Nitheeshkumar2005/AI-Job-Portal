@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/navbar";
+import navbar from "../components/navbar";
 
 function home() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ function home() {
 
   return (
     <>
-      <Navbar />
+      <navbar />
 
       <div className="home">
         <div className="hero hero-center">
