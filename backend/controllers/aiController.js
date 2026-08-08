@@ -1,7 +1,7 @@
 const fs = require("fs");
 const pdfParse = require("pdf-parse");
 const groq = require("../utils/groq");
-const Resume = require("../models/Resume");
+const Resume = require("../models/resume");
 
 const analyzeResume = async (req, res) => {
   try {

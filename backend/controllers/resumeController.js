@@ -1,4 +1,4 @@
-const Resume = require("../models/Resume");
+const Resume = require("../models/resume");
 
 // Upload Resume
 const uploadResume = async (req, res) => {

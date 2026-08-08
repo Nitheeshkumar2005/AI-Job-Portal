@@ -1,4 +1,4 @@
-const Application = require("../models/Application");
+const Application = require("../models/application");
 
 // Apply for Job[POST]
 const applyJob = async (req, res) => {

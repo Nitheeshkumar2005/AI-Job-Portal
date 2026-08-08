@@ -1,5 +1,5 @@
 
-const Job = require("../models/Job");
+const Job = require("../models/job");
 
 // Create Job
 const createJob = async (req, res) => {
