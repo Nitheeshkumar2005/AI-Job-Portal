@@ -1,20 +1,19 @@
 import { Routes, Route } from "react-router-dom";
 
+import home from "./pages/home";
+import login from "./pages/login";
+import register from "./pages/register";
+import jobs from "./pages/jobs";
+import jobdetails from "./pages/jobdetails";
+import candidatedashboard from "./pages/candidatedashboard";
+import recruiterdashboard from "./pages/recruiterdashboard";
+import uploadresume from "./pages/uploadresume";
+import resumeanalysis from "./pages/resumeanalysis";
+import createjob from "./pages/createjob";
+import applicants from "./pages/applicants";
+import notfound from "./pages/notfound";
 
-import Home from "./pages/home";
-import Login from "./pages/login";
-import Register from "./pages/register";
-import Jobs from "./pages/jobs";
-import JobDetails from "./pages/jobDetails";
-import CandidateDashboard from "./pages/candidateDashboard";
-import RecruiterDashboard from "./pages/recruiterDashboard";
-import UploadResume from "./pages/uploadResume";
-import ResumeAnalysis from "./pages/resumeAnalysis";
-import CreateJob from "./pages/createJob";
-import Applicants from "./pages/applicants";
-import NotFound from "./pages/notFound";
-import ProtectedRoute from "./components/protectedRoutes";
-
+import protectedroutes from "./components/protectedroutes";
 function App() {
   return (
     <Routes>
@@ -31,7 +30,7 @@ function App() {
     path="/candidate/dashboard"
     element={
         <ProtectedRoute>
-            <candidateDashboard />
+            <candidatedashboard />
         </ProtectedRoute>
     }
 />
@@ -39,14 +38,14 @@ function App() {
       <Route
         path="/recruiter/dashboard"
         element={<ProtectedRoute>
-          <recruiterDashboard />
+          <recruiterdashboard />
         </ProtectedRoute>}
       />
 
       <Route
         path="/upload-resume"
         element={
-        <ProtectedRoute><uploadResume />
+        <ProtectedRoute><uploadresume />
         </ProtectedRoute>
         
         }
@@ -55,7 +54,7 @@ function App() {
       <Route
         path="/resume-analysis"
         element={<ProtectedRoute>
-          <resumeAnalysis />
+          <resumeanalysis />
         </ProtectedRoute>}
       />
 
@@ -63,7 +62,7 @@ function App() {
         path="/create-job"
         element={
         <ProtectedRoute>
-          <createJob />
+          <createjob />
         </ProtectedRoute>}
       />
 
