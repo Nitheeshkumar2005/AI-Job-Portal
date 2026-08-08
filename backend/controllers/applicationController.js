@@ -67,7 +67,7 @@ const getMyApplications = async (req, res) => {
 // HR or Recruiter oru job-ku yaar yaar apply pannirukanga nu paakanum.
 // Get Applicants for Recruiter's Jobs
 
-const Job = require("../models/Job");
+const Job = require("../models/job");
 
 const getJobApplicants = async (req, res) => {
   try {
