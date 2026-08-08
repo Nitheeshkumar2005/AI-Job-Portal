@@ -1,37 +1,37 @@
 import { Routes, Route } from "react-router-dom";
 
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Jobs from "./pages/Jobs";
-import JobDetails from "./pages/JobDetails";
-import CandidateDashboard from "./pages/CandidateDashboard";
-import RecruiterDashboard from "./pages/RecruiterDashboard";
-import UploadResume from "./pages/UploadResume";
-import ResumeAnalysis from "./pages/ResumeAnalysis";
-import CreateJob from "./pages/CreateJob";
-import Applicants from "./pages/Applicants";
-import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./components/ProtectedRoutes";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Jobs from "./pages/jobs";
+import JobDetails from "./pages/jobDetails";
+import CandidateDashboard from "./pages/candidateDashboard";
+import RecruiterDashboard from "./pages/recruiterDashboard";
+import UploadResume from "./pages/uploadResume";
+import ResumeAnalysis from "./pages/resumeAnalysis";
+import CreateJob from "./pages/createJob";
+import Applicants from "./pages/applicants";
+import NotFound from "./pages/notFound";
+import ProtectedRoute from "./components/protectedRoutes";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<home />} />
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<login />} />
 
-      <Route path="/register" element={<Register />} />
+      <Route path="/register" element={<register />} />
 
-      <Route path="/jobs" element={<Jobs />} />
+      <Route path="/jobs" element={<jobs />} />
 
-      <Route path="/jobs/:id" element={<JobDetails />} />
+      <Route path="/jobs/:id" element={<jobDetails />} />
 <Route
     path="/candidate/dashboard"
     element={
         <ProtectedRoute>
-            <CandidateDashboard />
+            <candidateDashboard />
         </ProtectedRoute>
     }
 />
@@ -39,14 +39,14 @@ function App() {
       <Route
         path="/recruiter/dashboard"
         element={<ProtectedRoute>
-          <RecruiterDashboard />
+          <recruiterDashboard />
         </ProtectedRoute>}
       />
 
       <Route
         path="/upload-resume"
         element={
-        <ProtectedRoute><UploadResume />
+        <ProtectedRoute><uploadResume />
         </ProtectedRoute>
         
         }
@@ -55,7 +55,7 @@ function App() {
       <Route
         path="/resume-analysis"
         element={<ProtectedRoute>
-          <ResumeAnalysis />
+          <resumeAnalysis />
         </ProtectedRoute>}
       />
 
@@ -63,16 +63,16 @@ function App() {
         path="/create-job"
         element={
         <ProtectedRoute>
-          <CreateJob />
+          <createJob />
         </ProtectedRoute>}
       />
 
       <Route
         path="/applicants"
-        element={<Applicants />}
+        element={<applicants />}
       />
 
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<notfound />} />
     </Routes>
   );
 }

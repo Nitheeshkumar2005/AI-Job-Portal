@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 import { useNavigate } from "react-router-dom";
-function UploadResume() {
+function uploadResume() {
 
   const [resume, setResume] = useState(null);
   const navigate = useNavigate();
@@ -106,4 +106,4 @@ navigate("/resume-analysis");
 
 }
 
-export default UploadResume;
+export default uploadResume;

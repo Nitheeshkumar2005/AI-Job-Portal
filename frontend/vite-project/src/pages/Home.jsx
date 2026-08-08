@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 
-function Home() {
+function home() {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -94,4 +94,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default home;

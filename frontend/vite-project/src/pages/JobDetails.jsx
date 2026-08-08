@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 
-function JobDetails() {
+function jobDetails() {
 
   const { id } = useParams();
 
@@ -129,4 +129,4 @@ console.log(response.data);
 );
 }
 
-export default JobDetails;
+export default jobDetails;

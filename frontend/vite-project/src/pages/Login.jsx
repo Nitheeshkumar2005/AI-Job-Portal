@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 
-function Login() {
+function login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -99,4 +99,4 @@ if (role === "candidate") {
 
 }
 
-export default Login;
+export default login;

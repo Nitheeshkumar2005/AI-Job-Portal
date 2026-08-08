@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 
-function ResumeAnalysis() {
+function resumeAnalysis() {
 
   const [analysis, setAnalysis] = useState("");
 
@@ -79,4 +79,4 @@ return (
 );
 }
 
-export default ResumeAnalysis;
+export default resumeAnalysis;

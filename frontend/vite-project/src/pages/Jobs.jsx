@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import JobCards from "../components/JobCards";
-import Navbar from "../components/Navbar";
-import Searchbar from "../components/Searchbar";
+import JobCards from "../components/jobCards";
+import Navbar from "../components/navbar";
+import Searchbar from "../components/searchbar";
 
-function Jobs() {
+function jobs() {
 
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
@@ -91,4 +91,4 @@ function Jobs() {
   );
 }
 
-export default Jobs;
+export default jobs;
