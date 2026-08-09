@@ -2,9 +2,7 @@ const Resume = require("../models/resume");
 
 // Upload Resume
 const uploadResume = async (req, res) => {
-
     try {
-
         // Check authentication
         if (!req.user || !req.user.id) {
             return res.status(401).json({
@@ -22,35 +20,23 @@ const uploadResume = async (req, res) => {
         const candidate = req.user.id;
 
         const resume = await Resume.create({
-
-            candidate,
-
+            candidate: candidate,
             resumeName: req.file.originalname,
-
             resumeUrl: req.file.path
-
         });
 
-        res.status(201).json({
-
+        return res.status(201).json({
             message: "Resume Uploaded Successfully",
-
-            resume
-
+            resume: resume
         });
 
     } catch (err) {
-
         console.error("Resume upload error:", err);
 
-        res.status(500).json({
-
+        return res.status(500).json({
             message: err.message || "Resume upload failed"
-
         });
-
     }
-
 };
 
 module.exports = {

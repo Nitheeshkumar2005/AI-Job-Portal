@@ -2,7 +2,6 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Create uploads folder automatically
 const uploadDir = path.join(__dirname, "../uploads");
 
 if (!fs.existsSync(uploadDir)) {
@@ -10,7 +9,6 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 const storage = multer.diskStorage({
-
     destination: (req, file, cb) => {
         cb(null, uploadDir);
     },
@@ -21,18 +19,14 @@ const storage = multer.diskStorage({
 
         cb(null, uniqueName);
     }
-
 });
 
-// Allow only PDF files
 const fileFilter = (req, file, cb) => {
-
     if (file.mimetype === "application/pdf") {
         cb(null, true);
     } else {
         cb(new Error("Only PDF files are allowed"), false);
     }
-
 };
 
 const upload = multer({
