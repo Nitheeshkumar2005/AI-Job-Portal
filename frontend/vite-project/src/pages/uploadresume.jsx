@@ -1,109 +1,115 @@
 import { useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import Navbar from "../components/navbar";
 import { useNavigate } from "react-router-dom";
+
 function UploadResume() {
+    const [resume, setResume] = useState(null);
+    const navigate = useNavigate();
 
-  const [resume, setResume] = useState(null);
-  const navigate = useNavigate();
+    const uploadResume = async (e) => {
+        e.preventDefault();
 
-  const uploadResume = async (e) => {
-
-    e.preventDefault();
-
-    try {
-
-      const token = localStorage.getItem("token");
-
-      const formData = new FormData();
-
-      formData.append("resume", resume);
-
-      const response = await axiosInstance.post(
-        "/resume/upload",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
+        if (!resume) {
+            alert("Please select a resume first");
+            return;
         }
-      );
 
-      alert(response.data.message);
-navigate("/resume-analysis");
-      console.log(response.data);
+        try {
+            const token = localStorage.getItem("token");
 
-    } catch (err) {
+            const formData = new FormData();
+            formData.append("resume", resume);
 
-      if (err.response) {
-        alert(err.response.data.message);
-      } else {
-        alert("Upload Failed");
-      }
+            const response = await axiosInstance.post(
+                "/resume/upload",
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
 
-    }
+            alert(response.data.message || "Resume uploaded successfully!");
 
-  };
+            console.log("Upload response:", response.data);
 
-  return (
-  <>
-    <Navbar />
+            navigate("/resume-analysis");
 
-    <div className="upload-container">
+        } catch (err) {
+            console.error("Upload error:", err);
 
-      <div className="upload-card">
+            if (err.response) {
+                console.error("Status:", err.response.status);
+                console.error("Data:", err.response.data);
 
-        <h1>Upload Your Resume</h1>
+                alert(
+                    err.response.data?.message ||
+                    err.response.data?.error ||
+                    `Upload failed (${err.response.status})`
+                );
+            } else if (err.request) {
+                alert("Server did not respond. Please check the Render backend.");
+            } else {
+                alert("Upload Failed");
+            }
+        }
+    };
 
-        <p className="upload-subtitle">
-          Upload your resume in PDF format and let AI analyze your skills.
-        </p>
+    return (
+        <>
+            <div className="upload-container">
 
-        <form onSubmit={uploadResume}>
+                <div className="upload-card">
 
-          <label className="upload-box">
+                    <h1>Upload Your Resume</h1>
 
-            <input
-              type="file"
-              accept=".pdf"
-              onChange={(e) => setResume(e.target.files[0])}
-            />
+                    <p className="upload-subtitle">
+                        Upload your resume in PDF format and let AI analyze your skills.
+                    </p>
 
-            <div className="upload-content">
+                    <form onSubmit={uploadResume}>
 
-              <h2>📄</h2>
+                        <label className="upload-box">
 
-              <h3>Select Resume</h3>
+                            <input
+                                type="file"
+                                accept=".pdf"
+                                onChange={(e) => setResume(e.target.files[0])}
+                            />
 
-              <p>Only PDF files are supported</p>
+                            <div className="upload-content">
 
-              {
-                resume &&
-                <span className="file-name">
-                  {resume.name}
-                </span>
-              }
+                                <h2>📄</h2>
+
+                                <h3>Select Resume</h3>
+
+                                <p>Only PDF files are supported</p>
+
+                                {resume && (
+                                    <span className="file-name">
+                                        {resume.name}
+                                    </span>
+                                )}
+
+                            </div>
+
+                        </label>
+
+                        <button
+                            className="upload-btn"
+                            type="submit"
+                        >
+                            🚀 Upload Resume
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
-
-          </label>
-
-          <button
-            className="upload-btn"
-            type="submit"
-          >
-            🚀 Upload Resume
-          </button>
-
-        </form>
-
-      </div>
-
-    </div>
-  </>
-);
-
+        </>
+    );
 }
 
 export default UploadResume;

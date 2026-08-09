@@ -950,3 +950,9 @@ Applied for
 Java Full Stack Developer
 
 Pending
+//
+
+
+//Multer is Express middleware used to upload and handle files such as PDFs, images, and documents sent using multipart/form-data.
+// cb = callback function.
+// Multer kita "next enna panna?" nu solla use pannrom.
