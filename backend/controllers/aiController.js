@@ -14,8 +14,16 @@ const analyzeResume = async (req, res) => {
             });
         }
 
+        if (!resume.resumeData) {
+            return res.status(404).json({
+                message: "Resume data not found",
+            });
+        }
+
+        // Read PDF directly from MongoDB
         const pdfBuffer = resume.resumeData;
 
+        // Extract text from PDF
         const pdfData = await pdfParse(pdfBuffer);
 
         const prompt = `
@@ -44,14 +52,16 @@ ${pdfData.text}
             temperature: 0.5,
         });
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "Resume Analyzed Successfully",
             analysis: completion.choices[0].message.content,
         });
 
     } catch (err) {
-        res.status(500).json({
-            message: err.message,
+        console.error("Resume Analysis Error:", err);
+
+        return res.status(500).json({
+            message: err.message || "Resume analysis failed",
         });
     }
 };

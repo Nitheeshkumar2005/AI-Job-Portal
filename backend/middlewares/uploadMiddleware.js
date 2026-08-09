@@ -1,5 +1,7 @@
 const multer = require("multer");
 
+const storage = multer.memoryStorage();
+
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === "application/pdf") {
         cb(null, true);
@@ -9,7 +11,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-    storage: multer.memoryStorage(),
+    storage,
     fileFilter,
     limits: {
         fileSize: 5 * 1024 * 1024
