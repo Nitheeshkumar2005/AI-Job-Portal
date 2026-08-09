@@ -41,7 +41,7 @@ function Jobs() {
 
         <h1>Discover Your Next Career Opportunity 🚀</h1>
 
-        <searchbar onSearch={setSearch} />
+       <SearchBar onSearch={setSearch} />
 
         <select
           className="location-filter"
@@ -61,7 +61,7 @@ function Jobs() {
             <h2>No Jobs Found</h2>
           ) : (
             jobs.map((job) => (
-              <jobcards key={job._id} job={job} />
+             <JobCards key={job._id} job={job} />
             ))
           )}
 

@@ -1,69 +1,79 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const role = user?.role;
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  const role = user?.role;
+    const navigate = useNavigate();
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/login";
-  };
+    const logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
 
-  return (
-    <nav>
+        navigate("/login");
+    };
 
-      <h2>AI Job Portal</h2>
+    return (
+        <nav>
+            <h2>AI Job Portal</h2>
 
-      <ul className="nav-links">
+            <ul className="nav-links">
 
-        <li>
-          <Link to="/">Home</Link>
-        </li>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
 
-        {role === "candidate" && (
-          <>
-            <li>
-              <Link to="/jobs">Jobs</Link>
-            </li>
+                {role === "candidate" && (
+                    <>
+                        <li>
+                            <Link to="/jobs">Jobs</Link>
+                        </li>
 
-            <li>
-              <Link to="/upload-resume">Upload Resume</Link>
-            </li>
+                        <li>
+                            <Link to="/upload-resume">
+                                Upload Resume
+                            </Link>
+                        </li>
 
-            <li>
-              <Link to="/resume-analysis">AI Analysis</Link>
-            </li>
+                        <li>
+                            <Link to="/resume-analysis">
+                                AI Analysis
+                            </Link>
+                        </li>
 
-            <li>
-              <Link to="/candidate/dashboard">Dashboard</Link>
-            </li>
-          </>
-        )}
+                        <li>
+                            <Link to="/candidate/dashboard">
+                                Dashboard
+                            </Link>
+                        </li>
+                    </>
+                )}
 
-        {role === "recruiter" && (
-          <>
-            <li>
-              <Link to="/create-job">Create Job</Link>
-            </li>
+                {role === "recruiter" && (
+                    <>
+                        <li>
+                            <Link to="/create-job">
+                                Create Job
+                            </Link>
+                        </li>
 
-            <li>
-              <Link to="/recruiter/dashboard">Dashboard</Link>
-            </li>
-          </>
-        )}
+                        <li>
+                            <Link to="/recruiter/dashboard">
+                                Dashboard
+                            </Link>
+                        </li>
+                    </>
+                )}
 
-        <li>
-          <button onClick={logout}>
-            Logout
-          </button>
-        </li>
+                <li>
+                    <button onClick={logout}>
+                        Logout
+                    </button>
+                </li>
 
-      </ul>
-
-    </nav>
-  );
+            </ul>
+        </nav>
+    );
 }
 
 export default Navbar;
