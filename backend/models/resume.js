@@ -5,26 +5,26 @@ const resumeSchema = new mongoose.Schema(
         candidate: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            required: true,
+            required: true
         },
 
         resumeName: {
             type: String,
-            required: true,
+            required: true
         },
 
         resumeData: {
             type: Buffer,
-            required: true,
+            required: true
         },
 
         contentType: {
             type: String,
-            required: true,
-        },
+            required: true
+        }
     },
     {
-        timestamps: true,
+        timestamps: true
     }
 );
 
